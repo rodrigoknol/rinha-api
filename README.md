@@ -4,4 +4,4 @@ Repositório de uma implementação em TypeScript da [Rinha de Backend 2023](htt
 
 ## Comando para rodar o servidor
 
-deno run --allow-net app/server.ts
+`deno run --allow-net app/server.ts`
