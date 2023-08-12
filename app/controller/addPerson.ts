@@ -22,7 +22,6 @@ export const addPerson: (
 
     return { status: 201, headers };
   } catch (error) {
-    console.error("An error occured while trying to add user to DB: ", error);
     return { status: 422, headers };
   }
 };
