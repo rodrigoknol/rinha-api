@@ -8,11 +8,18 @@ export const getPersonByID: (id: string) => Promise<{
   const idHasTheRightLength = id.length === 36;
   if (!idHasTheRightLength) return { status: 404 };
 
-  const person = await getPersonByIDFromDB(id);
-  const personFormatted = {
-    ...person,
-    nascimento: new Date(person.nascimento).toLocaleDateString("fr-CA") as Year,
-  };
+  try {
+    const person = await getPersonByIDFromDB(id);
+    const personFormatted = {
+      ...person,
+      nascimento: new Date(person.nascimento).toLocaleDateString(
+        "fr-CA"
+      ) as Year,
+    };
 
-  return { status: 200, body: personFormatted };
+    return { status: 200, body: personFormatted };
+  } catch (error) {
+    console.error("Could not find person by the provided UUID: ", error);
+    return { status: 404 };
+  }
 };
