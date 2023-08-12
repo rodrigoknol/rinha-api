@@ -8,7 +8,7 @@ export const router = async (request: Request) => {
 
   const { search, pathname } = new URL(url);
   const [path, pathComplement] = pathname.substring(1).split("/");
-  const requestBody = body && (await request.json());
+  const requestBody = body && (await request?.json?.());
 
   const routes = {
     pessoas: async () => {

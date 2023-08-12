@@ -1,6 +1,18 @@
-export const getPersonByID: (
-  id: string
-) => Promise<{ status: 200 | 404; body: any }> = async (id) => {
-  console.log(id);
-  return { status: 200, body: "pessoa" };
+import { PersonType, Year } from "../entity/person.interface.ts";
+import { getPersonByIDFromDB } from "../infra/gateway/getPersonByIDFromDB.ts";
+
+export const getPersonByID: (id: string) => Promise<{
+  status: 200 | 404;
+  body?: PersonType & { id: string };
+}> = async (id) => {
+  const idHasTheRightLength = id.length === 36;
+  if (!idHasTheRightLength) return { status: 404 };
+
+  const person = await getPersonByIDFromDB(id);
+  const personFormatted = {
+    ...person,
+    nascimento: new Date(person.nascimento).toLocaleDateString("fr-CA") as Year,
+  };
+
+  return { status: 200, body: personFormatted };
 };
