@@ -5,6 +5,7 @@ const sql = postgres({
   port: 5432,
   database: "rinha",
   username: "postgres",
+  password: "password",
   max: 20,
 });
 
