@@ -1,19 +1,28 @@
 import { Person } from "../entity/person.ts";
+import { PersonType } from "../entity/person.interface.ts";
+import { insertPerson } from "../infra/gateway/insertPerson.ts";
 
 export const addPerson: (
-  request: any
+  request: PersonType
 ) => Promise<{ status: 201 | 400 | 422; headers: HeadersInit }> = async (
-  request: any
+  request: PersonType
 ) => {
-  console.log(request);
-
   const headers = new Headers();
-  const person = new Person(request);
+  const personEntity = new Person(request);
 
-  const status = person.setStatusBasedOnValidity() as 400 | 422;
+  const status = personEntity.setStatusBasedOnValidity() as 400 | 422;
   if (status > 299) return { status, headers };
 
-  headers.append("Location", ` /pessoas/123-432`);
+  const personToSave = personEntity.generatePersonWithID();
 
-  return { status: 201, headers };
+  try {
+    await insertPerson(personToSave);
+
+    headers.append("Location", `/pessoas/${personToSave.id}`);
+
+    return { status: 201, headers };
+  } catch (error) {
+    console.error("An error occured while trying to add user to DB: ", error);
+    return { status: 500, headers };
+  }
 };

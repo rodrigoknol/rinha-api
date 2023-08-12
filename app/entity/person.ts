@@ -25,6 +25,11 @@ export class Person {
     }, 200) as 200 | 400 | 422;
   }
 
+  generatePersonWithID() {
+    const UUID = crypto.randomUUID();
+    return { id: UUID, ...this.personData };
+  }
+
   #validateNickname() {
     return this.#baseValidator("apelido", 32);
   }
