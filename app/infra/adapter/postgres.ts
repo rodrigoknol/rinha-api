@@ -1,4 +1,4 @@
-import postgres from "https://deno.land/x/postgresjs@v3.3.5/mod.js";
+import { postgres } from "../../../deps.ts";
 
 const sql = postgres({
   host: "localhost",

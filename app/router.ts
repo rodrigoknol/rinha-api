@@ -28,7 +28,7 @@ export const router = async (request: Request) => {
         return new Response(JSON.stringify(body), { status });
       }
 
-      return new Response("not found", { status: 404 });
+      return new Response("bad request", { status: 400 });
     },
     "contagem-pessoas": async () => {
       const { status, body } = await getTotalPeopleCount();
