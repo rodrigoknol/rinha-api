@@ -8,3 +8,26 @@ Repositório de uma implementação em TypeScript da [Rinha de Backend 2023](htt
 ## Comando para rodar o servidor
 
 `deno run --allow-net --allow-env app/server.ts`
+
+## Criando uma nova imagem
+
+Apenas para Rodrigo pois só ele tem acesso ao docker hub...
+primeiro rodar
+
+```
+docker build -t rodrigoknolseisen/rinha-backend-ts .
+```
+
+e depois
+
+```
+docker push rodrigoknolseisen/rinha-backend-ts
+```
+
+### Rodando os containers
+
+```
+docker-compose rm -f
+docker-compose down
+docker-compose up --build
+```
