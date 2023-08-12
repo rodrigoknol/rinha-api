@@ -2,9 +2,8 @@ import { addPerson } from "./controller/addPerson.ts";
 import { getPeopleByQuery } from "./controller/getPeopleByQuery.ts";
 import { getPersonByID } from "./controller/getPersonByID.ts";
 import { getTotalPeopleCount } from "./controller/getTotalPeopleCount.ts";
-import { ResponseHandler } from "./server.interface.ts";
 
-export const router = async (request: Request, response: ResponseHandler) => {
+export const router = async (request: Request) => {
   const { method, url, body } = request;
 
   const { search, pathname } = new URL(url);
@@ -15,27 +14,25 @@ export const router = async (request: Request, response: ResponseHandler) => {
     pessoas: async () => {
       const isAMutation = method === "POST";
       if (isAMutation) {
-        const { status } = await addPerson(requestBody);
-
-        return response(new Response(null, { status }));
+        const { status, headers } = await addPerson(requestBody);
+        return new Response(null, { status, headers });
       }
 
       if (pathComplement) {
         const { body, status } = await getPersonByID(pathComplement);
-        return response(new Response(JSON.stringify(body), { status }));
+        return new Response(JSON.stringify(body), { status });
       }
 
       if (search) {
         const { body, status } = await getPeopleByQuery(search);
-        return response(new Response(JSON.stringify(body), { status }));
+        return new Response(JSON.stringify(body), { status });
       }
 
-      return response(new Response("not found", { status: 404 }));
+      return new Response("not found", { status: 404 });
     },
     "contagem-pessoas": async () => {
       const { status, body } = await getTotalPeopleCount();
-
-      return response(new Response(body, { status }));
+      return new Response(body, { status });
     },
   };
 
@@ -45,5 +42,5 @@ export const router = async (request: Request, response: ResponseHandler) => {
     return await routes?.[path as "pessoas" | "contagem-pessoas"]?.();
   }
 
-  return response(new Response(null, { status: 404 }));
+  return new Response(null, { status: 404 });
 };
