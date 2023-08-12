@@ -1,7 +1,7 @@
 import { postgres } from "../../../deps.ts";
 
 const sql = postgres({
-  host: "localhost",
+  host: "db",
   port: 5432,
   database: "rinha",
   username: "postgres",
