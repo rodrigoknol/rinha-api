@@ -1,0 +1,5 @@
+# Mac trail on folders
+.DS_Store
+
+# VSCode configuration
+.vscode
