@@ -12,7 +12,7 @@ export const getPersonByID: (id: string) => Promise<{
     const person = await getPersonByIDFromDB(id);
     const personFormatted = {
       ...person,
-      nascimento: new Date(person.nascimento).toLocaleDateString(
+      nascimento: new Date(person?.nascimento).toLocaleDateString(
         "fr-CA"
       ) as Year,
     };

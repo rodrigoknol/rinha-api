@@ -14,4 +14,4 @@ COPY . .
 
 RUN deno cache app/server.ts
 
-CMD ["run", "--allow-all", "app/server.ts"]
+CMD ["run", "--allow-all", "--unstable", "app/server.ts"]
