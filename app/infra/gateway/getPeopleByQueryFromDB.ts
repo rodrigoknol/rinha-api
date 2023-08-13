@@ -10,10 +10,8 @@ export const getPeopleByQueryFromDB = async (query: string) => {
     WHERE
       apelido LIKE '%' ||  ${query} || '%' OR
       nome LIKE '%' || ${query} || '%' OR
-      array_to_string( stack , ',') LIKE '%' || ${query} || '%'
+      '%' || ${query} || '%' LIKE ANY(stack)
     LIMIT
       50
-    OFFSET
-      0
   `) as (PersonType & { id: string })[];
 };
