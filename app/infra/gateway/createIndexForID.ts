@@ -1,4 +1,4 @@
-import sql from "../adapter/postgres.ts";
+import sql from "../adapter/db-postgres.ts";
 
 export const createIndexForID = async () => {
   return await sql`

@@ -1,9 +1,9 @@
-import { PersonType } from "../entity/person.interface.ts";
+import { PersonWithID } from "../entity/person.interface.ts";
 import { getPeopleByQueryFromDB } from "../infra/gateway/getPeopleByQueryFromDB.ts";
 
 export const getPeopleByQuery: (queryParam: string) => Promise<{
   status: 200 | 400;
-  body?: (PersonType & { id: string })[];
+  body?: PersonWithID[];
 }> = async (queryParam) => {
   const expectedSearchKey = "t";
   const query = new URLSearchParams(queryParam);

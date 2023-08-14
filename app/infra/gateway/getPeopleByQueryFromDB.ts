@@ -1,5 +1,5 @@
-import { PersonType } from "../../entity/person.interface.ts";
-import sql from "../adapter/postgres.ts";
+import { PersonWithID } from "../../entity/person.interface.ts";
+import sql from "../adapter/db-postgres.ts";
 
 export const getPeopleByQueryFromDB = async (query: string) => {
   return (await sql`
@@ -13,5 +13,5 @@ export const getPeopleByQueryFromDB = async (query: string) => {
       '%' || ${query} || '%' LIKE ANY(stack)
     LIMIT
       50
-  `) as (PersonType & { id: string })[];
+  `) as PersonWithID[];
 };

@@ -1,15 +1,15 @@
 import { PersonWithID } from "../../entity/person.interface.ts";
 import sql from "../adapter/db-postgres.ts";
 
-export const getPersonByIDFromDB = async (id: string) => {
+export const getPersonByNicknameFromDB = async (nickname: string) => {
   const person = await sql`
     SELECT 
-      * 
+      apelido 
     FROM
       people
     WHERE
-      CAST(id AS VARCHAR) LIKE ${id} 
-      AND id IS NOT NULL
+      apelido LIKE ${nickname} 
+      AND apelido IS NOT NULL
     LIMIT
      1
   `;

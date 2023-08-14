@@ -1,9 +1,9 @@
-import { PersonType, Year } from "../entity/person.interface.ts";
+import { PersonWithID, Year } from "../entity/person.interface.ts";
 import { getPersonByIDFromDB } from "../infra/gateway/getPersonByIDFromDB.ts";
 
 export const getPersonByID: (id: string) => Promise<{
   status: 200 | 404;
-  body?: PersonType & { id: string };
+  body?: PersonWithID;
 }> = async (id) => {
   const idHasTheRightLength = id.length === 36;
   if (!idHasTheRightLength) return { status: 404 };

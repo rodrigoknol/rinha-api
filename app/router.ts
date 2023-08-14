@@ -2,8 +2,9 @@ import { addPerson } from "./controller/addPerson.ts";
 import { getPeopleByQuery } from "./controller/getPeopleByQuery.ts";
 import { getPersonByID } from "./controller/getPersonByID.ts";
 import { getTotalPeopleCount } from "./controller/getTotalPeopleCount.ts";
+import { Queue } from "./entity/queue.interface.ts";
 
-export const router = async (request: Request) => {
+export const router = async (request: Request, queue: Queue) => {
   const { method, url, body } = request;
 
   const { search, pathname } = new URL(url);
@@ -14,7 +15,7 @@ export const router = async (request: Request) => {
     pessoas: async () => {
       const isAMutation = method === "POST";
       if (isAMutation) {
-        const { status, headers } = await addPerson(requestBody);
+        const { status, headers } = await addPerson(requestBody, queue);
         return new Response(null, { status, headers });
       }
 

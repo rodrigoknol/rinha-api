@@ -15,3 +15,5 @@ export type PersonType = {
   nascimento: Year;
   stack?: string[];
 };
+
+export type PersonWithID = PersonType & { id: string };
