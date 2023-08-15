@@ -4,8 +4,6 @@ EXPOSE 8080
 
 WORKDIR /app
 
-USER deno
-
 COPY deps.ts .
 
 RUN deno cache deps.ts
@@ -14,4 +12,6 @@ COPY . .
 
 RUN deno cache app/server.ts
 
-CMD ["run", "--allow-all", "--unstable", "app/server.ts"]
+RUN deno compile --allow-net --allow-env --allow-read --unstable app/server.ts
+
+ENTRYPOINT [ "./server" ]
