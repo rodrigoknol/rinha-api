@@ -11,7 +11,7 @@ services:
       resources:
         limits:
           cpus: '0.4'
-          memory: '0.5GB'
+          memory: '0.55GB'
 
   api2: # API - Instância 01
     image: rodrigoknolseisen/rinha-backend-ts:latest
@@ -24,7 +24,7 @@ services:
       resources:
         limits:
           cpus: '0.4'
-          memory: '0.5GB'
+          memory: '0.55GB'
 
   nginx: # Load Balancer
     image: nginx:latest
@@ -39,7 +39,7 @@ services:
       resources:
         limits:
           cpus: '0.075'
-          memory: '0.5GB'
+          memory: '0.4GB'
 
   db: # Banco de dados
    image: postgres:latest

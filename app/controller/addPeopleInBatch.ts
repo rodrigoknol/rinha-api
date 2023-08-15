@@ -1,6 +1,7 @@
 import { PersonWithID } from "../entity/person.interface.ts";
 import { Queue } from "../entity/queue.interface.ts";
 import { insertPeople } from "../infra/gateway/insertPeople.ts";
+import { randomNumberFromRange } from "../util/randomNumberFromRange.ts";
 
 let msgQeue: PersonWithID[] = [];
 
@@ -13,5 +14,5 @@ export const addPeopleInBatch = (peopleQueue: Queue) => {
     const dataToAdd = [...msgQeue];
     msgQeue = [];
     insertPeople(dataToAdd);
-  }, 600);
+  }, randomNumberFromRange(750, 900));
 };
