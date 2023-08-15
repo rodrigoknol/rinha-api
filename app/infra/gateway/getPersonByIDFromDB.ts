@@ -4,11 +4,11 @@ import sql from "../adapter/db-postgres.ts";
 export const getPersonByIDFromDB = async (id: string) => {
   const person = await sql`
     SELECT 
-      * 
+      id, apelido, nome, nascimento, stack
     FROM
       people
     WHERE
-      CAST(id AS VARCHAR) LIKE ${id} 
+      id = ${id}::uuid
       AND id IS NOT NULL
     LIMIT
      1

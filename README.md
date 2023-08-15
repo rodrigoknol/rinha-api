@@ -7,7 +7,7 @@ Repositório de uma implementação em TypeScript da [Rinha de Backend 2023](htt
 
 ## Comando para rodar o servidor
 
-`deno run --allow-net --allow-env app/server.ts`
+`deno run --allow-net --allow-env --allow-read app/server.ts`
 
 ## Criando uma nova imagem
 

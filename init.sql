@@ -6,5 +6,3 @@ CREATE TABLE IF NOT EXISTS people (
   stack VARCHAR [],
   CONSTRAINT person_pk PRIMARY KEY(apelido, id)
 );
-
- CREATE INDEX IF NOT EXISTS idx_uuid ON people(id);
