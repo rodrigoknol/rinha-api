@@ -1,14 +1,13 @@
 import { Person } from "../entity/person.ts";
 import { PersonType } from "../entity/person.interface.ts";
-import { Queue } from "../entity/queue.interface.ts";
 import { getPersonByNicknameFromDB } from "../infra/gateway/getPersonByNicknameFromDB.ts";
 
 export const addPerson: (
   request: PersonType,
-  queue: Queue
-) => Promise<{ status: 201 | 400 | 422; headers: HeadersInit }> = async (
+  enqueue: (value: object) => void
+) => Promise<{ status: 201 | 400 | 422 | 500; headers: HeadersInit }> = async (
   request: PersonType,
-  queue: Queue
+  enqueue: (value: object) => void
 ) => {
   const headers = new Headers();
   const personEntity = new Person(request);
@@ -16,18 +15,22 @@ export const addPerson: (
   const status = personEntity.setStatusBasedOnValidity() as 400 | 422;
   if (status > 299) return { status, headers };
 
-  const personToSave = personEntity.generatePersonWithID();
+  const personToAdd = personEntity.generatePersonWithID();
 
-  headers.append("Location", `/pessoas/${personToSave.id}`);
+  headers.append("Location", `/pessoas/${personToAdd.id}`);
 
-  const personAlreadyExistsOnDB = await getPersonByNicknameFromDB(
-    personToSave.apelido
+  const checkIfPersonAlreadyExistsOnDB = await getPersonByNicknameFromDB(
+    personToAdd.apelido
   );
-
-  if (personAlreadyExistsOnDB) {
+  if (checkIfPersonAlreadyExistsOnDB || !personToAdd) {
     return { status: 422, headers };
   }
 
-  queue.enqueue(personToSave);
-  return { status: 201, headers };
+  try {
+    enqueue(personToAdd);
+    return { status: 201, headers };
+  } catch (error) {
+    console.error("Error trying to enqueue person", error);
+    return { status: 500, headers };
+  }
 };

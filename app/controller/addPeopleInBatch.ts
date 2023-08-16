@@ -7,12 +7,12 @@ let msgQeue: PersonWithID[] = [];
 
 export const addPeopleInBatch = (peopleQueue: Queue) => {
   peopleQueue.listener((msg) => {
-    msgQeue.push(msg as PersonWithID);
+    msgQeue[msgQeue.length] = msg as PersonWithID;
   });
 
   setInterval(() => {
     const dataToAdd = [...msgQeue];
     msgQeue = [];
     insertPeople(dataToAdd);
-  }, randomNumberFromRange(750, 900));
+  }, randomNumberFromRange(800, 950));
 };

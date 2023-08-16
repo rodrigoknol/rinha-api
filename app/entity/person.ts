@@ -18,11 +18,8 @@ export class Person {
       this.#validateBirth(),
       this.#validateStack(),
     ];
-
-    return statuses.reduce((acc, status) => {
-      if (status > 299) acc = status;
-      return acc;
-    }, 200) as 200 | 400 | 422;
+    const errors = statuses.find((status) => status > 299);
+    return errors ? errors : 200;
   }
 
   generatePersonWithID() {

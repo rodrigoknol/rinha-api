@@ -2,6 +2,8 @@ import { PersonWithID } from "../../entity/person.interface.ts";
 import sql from "../adapter/db-postgres.ts";
 
 export const getPersonByIDFromDB = async (id: string) => {
+  if (!id) return undefined;
+
   const person = await sql`
     SELECT 
       id, apelido, nome, nascimento, stack

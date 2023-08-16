@@ -5,20 +5,14 @@ export const getPeopleByQuery: (queryParam: string) => Promise<{
   status: 200 | 400;
   body?: PersonWithID[];
 }> = async (queryParam) => {
-  const expectedSearchKey = "t";
-  const query = new URLSearchParams(queryParam);
-
-  const term = query.get(expectedSearchKey);
+  const [, term] = queryParam.split("=");
   if (!term) return { status: 400 };
 
   try {
-    const listResultedFromQuery = await getPeopleByQueryFromDB(term);
-    return {
-      status: 200,
-      body: listResultedFromQuery,
-    };
+    const queryResult = await getPeopleByQueryFromDB(term);
+    return { status: 200, body: queryResult };
   } catch (error) {
-    console.error("Error while querying DB: ", error);
+    console.error("Error on query: ", error);
     return { status: 400 };
   }
 };

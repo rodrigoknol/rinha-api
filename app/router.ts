@@ -9,13 +9,13 @@ export const router = async (request: Request, queue: Queue) => {
 
   const { search, pathname } = new URL(url);
   const [path, pathComplement] = pathname.substring(1).split("/");
-  const requestBody = body && (await request?.json?.());
 
   const routes = {
     pessoas: async () => {
       const isAMutation = method === "POST";
       if (isAMutation) {
-        const { status, headers } = await addPerson(requestBody, queue);
+        const requestBody = body && (await request?.json?.());
+        const { status, headers } = await addPerson(requestBody, queue.enqueue);
         return new Response(null, { status, headers });
       }
 
@@ -37,11 +37,13 @@ export const router = async (request: Request, queue: Queue) => {
     },
   };
 
-  const hasRoute = Object.keys(routes).find((route) => route === path);
+  if (path !== "pessoas" && path !== "contagem-pessoas")
+    return new Response(null, { status: 404 });
 
-  if (hasRoute) {
-    return await routes?.[path as "pessoas" | "contagem-pessoas"]?.();
+  try {
+    return await routes?.[path]?.();
+  } catch (error) {
+    console.error("Error that bubbled up to router: ", error);
+    return new Response(null, { status: 500 });
   }
-
-  return new Response(null, { status: 404 });
 };
