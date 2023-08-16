@@ -9,16 +9,13 @@ export const getPersonByID: (id: string) => Promise<{
   const idHasTheRightLength = id.length === 36;
   if (!idHasTheRightLength) return { status: 404 };
 
-  const getterFromDBWithDelay = async () =>
-    (await delay(() => getPersonByIDFromDB(id), 400)) as PersonWithID;
-
   try {
-    let person;
-    const triesNumber = new Array(2);
-
-    for await (const _tries of triesNumber) {
-      if (person?.nascimento) break;
-      person = await getterFromDBWithDelay();
+    let person = await getPersonByIDFromDB(id);
+    if (!person?.nascimento) {
+      person = (await delay(
+        () => getPersonByIDFromDB(id),
+        700
+      )) as PersonWithID;
     }
 
     const personFormatted = {
