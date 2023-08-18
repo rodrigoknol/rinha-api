@@ -2,6 +2,7 @@ version: '3.5'
 services:
   api1: # API - Instância 01
     image: rodrigoknolseisen/rinha-backend-ts:latest
+    platform: linux/amd64
     hostname: api1
     depends_on:
       - db
@@ -15,6 +16,7 @@ services:
 
   api2: # API - Instância 01
     image: rodrigoknolseisen/rinha-backend-ts:latest
+    platform: linux/amd64
     hostname: api2
     depends_on:
       - db
