@@ -14,7 +14,7 @@ Repositório de uma implementação em TypeScript da [Rinha de Backend 2023](htt
 Para criar a imagem do buildx que montara os builds:
 
 ```
-docker buildx create --name pedantic_lederberg --platform linux/amd64
+docker buildx create --name pedantic_lederberg --platform linux/amd64,linux/arm64,linux/arm/v8
 ```
 
 Para subir a imagem:
