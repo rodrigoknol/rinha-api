@@ -11,7 +11,17 @@ Repositório de uma implementação em TypeScript da [Rinha de Backend 2023](htt
 
 ## Criando uma nova imagem
 
-Primeiro rodar: `docker build -t rodrigoknolseisen/rinha-backend-ts .`, e depois: `docker push rodrigoknolseisen/rinha-backend-ts`
+Para criar a imagem do buildx que montara os builds:
+
+```
+docker buildx create --name pedantic_lederberg --platform linux/amd64
+```
+
+Para subir a imagem:
+
+```
+docker buildx build -t rodrigoknolseisen/rinha-backend-ts --builder pedantic_lederberg --push .
+```
 
 ### Rodando os containers
 
