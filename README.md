@@ -11,16 +11,8 @@ Repositório de uma implementação em TypeScript da [Rinha de Backend 2023](htt
 
 ## Criando uma nova imagem
 
-Para criar a imagem do buildx que montara os builds:
-
 ```
-docker buildx create --name amd64_builder  --node linux_amd64_builder --platform linux/amd64
-```
-
-Para subir a imagem:
-
-```
-docker buildx build -t rodrigoknolseisen/rinha-backend-ts --builder amd64_builder --push .
+docker buildx build --no-cache=true -t rodrigoknolseisen/rinha-backend-ts --builder desktop-linux --push .
 ```
 
 ### Rodando os containers
